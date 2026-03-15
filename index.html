@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkinIQ — Finally, skincare that knows your skin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose: #C8445A;
+  --rose-light: #E8728A;
+  --rose-dim: rgba(200,68,90,.1);
+  --rose-glow: rgba(200,68,90,.06);
+  --gold: #B8956A;
+  --gold-light: #D4B48E;
+  --gold-dim: rgba(184,149,106,.1);
+  --sage: #7A9E8E;
+  --sage-dim: rgba(122,158,142,.1);
+  --cream: #F5F0E8;
+  --cream2: #EDE6D8;
+  --bg: #0A080C;
+  --bg2: #100E14;
+  --bg3: #16131C;
+  --bg4: #1E1A28;
+  --bg5: #252030;
+  --border: rgba(255,255,255,.06);
+  --border2: rgba(255,255,255,.1);
+  --border3: rgba(255,255,255,.16);
+  --text: #F0EAE0;
+  --text2: #9E9590;
+  --text3: #5E5A58;
+  --fd: 'Cormorant Garamond', serif;
+  --fb: 'Outfit', sans-serif;
+  --fm: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--fb);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--rose);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform .08s, width .2s, height .2s, background .2s;
+  mix-blend-mode: normal;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(200,68,90,.5);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform .18s ease, width .2s, height .2s, border-color .2s;
+}
+body:has(a:hover) .cursor,
+body:has(button:hover) .cursor { width: 14px; height: 14px; }
+body:has(a:hover) .cursor-ring,
+body:has(button:hover) .cursor-ring { width: 48px; height: 48px; border-color: rgba(200,68,90,.3); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(10,8,12,.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--fd);
+  font-size: 24px; font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--text);
+}
+.nav-logo em { color: var(--rose); font-style: normal; }
+.nav-links { display: flex; gap: 36px; }
+.nav-links a {
+  font-size: 13px; font-weight: 400; color: var(--text2);
+  text-decoration: none; letter-spacing: .04em;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: transparent;
+  border: 1px solid var(--rose);
+  color: var(--rose);
+  font-family: var(--fb);
+  font-size: 13px; font-weight: 500;
+  letter-spacing: .06em;
+  padding: 9px 22px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  text-decoration: none;
+}
+.nav-cta:hover { background: var(--rose); color: #fff; }
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .028;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 40%, rgba(200,68,90,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 85% 60%, rgba(184,149,106,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 50% 90%, rgba(122,158,142,.05) 0%, transparent 60%);
+}
+.hero-lines {
+  position: absolute; inset: 0; overflow: hidden; opacity: .3;
+}
+.hero-lines::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(200,68,90,.4) 30%, rgba(200,68,90,.2) 60%, transparent 100%);
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  max-width: 1100px; margin: 0 auto; padding: 0 48px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fm); font-size: 10px; font-weight: 300;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid rgba(184,149,106,.3);
+  padding: 6px 14px; margin-bottom: 36px;
+  background: rgba(184,149,106,.05);
+}
+.hero-badge-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold);
+  animation: goldpulse 3s ease infinite;
+}
+@keyframes goldpulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+.hero h1 {
+  font-family: var(--fd);
+  font-size: clamp(52px, 5.5vw, 78px);
+  font-weight: 400; line-height: 1.06;
+  letter-spacing: -.01em;
+  margin-bottom: 8px;
+}
+.hero h1 .italic { font-style: italic; color: var(--rose-light); }
+.hero h1 .small { font-size: .65em; display: block; font-weight: 300; color: var(--text2); font-style: normal; letter-spacing: .02em; margin-top: 4px; }
+.hero-divider {
+  width: 48px; height: 1px;
+  background: linear-gradient(to right, var(--rose), transparent);
+  margin: 28px 0;
+}
+.hero-desc {
+  font-size: 16px; color: var(--text2);
+  line-height: 1.8; max-width: 440px;
+  margin-bottom: 40px; font-weight: 300;
+}
+.hero-desc strong { color: var(--text); font-weight: 500; }
+
+/* waitlist form */
+.waitlist-form {
+  display: flex; gap: 0;
+  border: 1px solid var(--border2);
+  border-radius: 2px;
+  overflow: hidden;
+  max-width: 420px;
+  margin-bottom: 20px;
+  background: var(--bg2);
+}
+.waitlist-form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 14px 18px;
+  font-family: var(--fb); font-size: 14px;
+  color: var(--text); outline: none;
+}
+.waitlist-form input::placeholder { color: var(--text3); }
+.waitlist-form button {
+  background: var(--rose);
+  border: none;
+  padding: 14px 24px;
+  font-family: var(--fb); font-size: 13px;
+  font-weight: 500; letter-spacing: .06em;
+  color: #fff; cursor: pointer;
+  transition: background .2s; white-space: nowrap;
+}
+.waitlist-form button:hover { background: var(--rose-light); }
+.hero-note {
+  font-family: var(--fm); font-size: 11px;
+  color: var(--text3); letter-spacing: .04em;
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-note::before { content: ''; width: 12px; height: 1px; background: var(--text3); }
+
+/* hero right — phone mockup */
+.hero-right { position: relative; }
+.phone-wrap {
+  position: relative; width: 280px; margin: 0 auto;
+}
+.phone-frame {
+  width: 280px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 36px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 40px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04);
+  animation: float 6s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+.phone-notch {
+  width: 80px; height: 20px;
+  background: var(--bg3);
+  border-radius: 0 0 12px 12px;
+  margin: 0 auto;
+  position: relative; z-index: 2;
+  border: 1px solid var(--border);
+  border-top: none;
+}
+.phone-screen { padding: 0 16px 20px; }
+.phone-status {
+  display: flex; justify-content: space-between;
+  font-family: var(--fm); font-size: 9px; color: var(--text3);
+  padding: 10px 0 14px; letter-spacing: .06em;
+}
+.app-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 16px;
+}
+.app-logo-sm { font-family: var(--fd); font-size: 17px; font-weight: 600; color: var(--text); }
+.app-logo-sm em { color: var(--rose); font-style: normal; }
+.notif-card {
+  background: var(--bg4);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  position: relative; overflow: hidden;
+}
+.notif-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--rose);
+  border-radius: 0;
+}
+.notif-title { font-size: 11px; font-weight: 600; color: var(--text); margin-bottom: 3px; padding-left: 8px; }
+.notif-body { font-size: 10px; color: var(--text2); line-height: 1.5; padding-left: 8px; }
+.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.mini-stat {
+  background: var(--bg4); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px;
+}
+.mini-stat-num {
+  font-family: var(--fd); font-size: 20px; font-weight: 600;
+  line-height: 1; margin-bottom: 2px;
+}
+.mini-stat-label { font-size: 9px; color: var(--text3); font-family: var(--fm); letter-spacing: .06em; text-transform: uppercase; }
+.conflict-mini { display: flex; flex-direction: column; gap: 5px; }
+.cm-row { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text2); }
+.cm-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+/* floating glow behind phone */
+.phone-glow {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(200,68,90,.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint {
+  position: absolute; bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font-family: var(--fm); font-size: 10px; color: var(--text3);
+  letter-spacing: .1em; text-transform: uppercase; z-index: 2;
+  animation: fadeup 1s ease 1s both;
+}
+@keyframes fadeup { from{opacity:0;transform:translate(-50%,10px)} to{opacity:1;transform:translate(-50%,0)} }
+.scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--rose), transparent);
+  animation: scrolldown 2s ease infinite;
+}
+@keyframes scrolldown { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+
+/* ── SECTION BASE ── */
+.sec { padding: 100px 0; border-top: 1px solid var(--border); }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+.eyebrow {
+  font-family: var(--fm); font-size: 10px; font-weight: 300;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--rose); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::after { content: ''; flex: 0 0 32px; height: 1px; background: var(--rose); opacity: .4; }
+.sec-title {
+  font-family: var(--fd);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 400; line-height: 1.1;
+  letter-spacing: -.01em; margin-bottom: 16px;
+}
+.sec-title em { font-style: italic; color: var(--rose-light); }
+.sec-sub {
+  font-size: 15px; color: var(--text2); line-height: 1.8;
+  max-width: 520px; font-weight: 300;
+}
+
+/* ── PROBLEM SECTION ── */
+.problem-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; margin-top: 60px;
+  border: 1px solid var(--border);
+}
+.prob-item {
+  padding: 36px; border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+  transition: background .3s;
+}
+.prob-item:hover { background: var(--bg2); }
+.prob-item:nth-child(2n) { border-right: none; }
+.prob-item:nth-child(5), .prob-item:nth-child(6) { border-bottom: none; }
+.prob-num {
+  font-family: var(--fd); font-size: 64px; font-weight: 400;
+  opacity: .04; line-height: 1; margin-bottom: -12px;
+  color: var(--rose);
+}
+.prob-icon { font-size: 20px; margin-bottom: 12px; }
+.prob-title { font-size: 17px; font-weight: 500; margin-bottom: 10px; color: var(--text); }
+.prob-body { font-size: 13px; color: var(--text2); line-height: 1.75; font-weight: 300; }
+.prob-body strong { color: var(--text); font-weight: 500; }
+
+/* ── HOW IT WORKS ── */
+.steps-layout { margin-top: 72px; }
+.step-item {
+  display: grid; grid-template-columns: 80px 1fr 1fr;
+  gap: 48px; align-items: start;
+  padding: 56px 0;
+  border-bottom: 1px solid var(--border);
+}
+.step-item:last-child { border-bottom: none; }
+.step-left { text-align: right; padding-top: 6px; }
+.step-index {
+  font-family: var(--fd); font-size: 64px; font-weight: 400;
+  color: var(--rose); opacity: .15; line-height: 1;
+}
+
+.step-tag {
+  font-family: var(--fm); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+  font-weight: 300;
+}
+.step-title {
+  font-family: var(--fd); font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 500; line-height: 1.2; margin-bottom: 14px;
+  letter-spacing: -.01em;
+}
+.step-body { font-size: 14px; color: var(--text2); line-height: 1.8; font-weight: 300; }
+.step-points { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+.step-point {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--text2); font-weight: 300;
+}
+.step-point::before { content: '—'; color: var(--rose); flex-shrink: 0; opacity: .6; font-size: 12px; margin-top: 2px; }
+
+/* step visuals */
+.step-visual {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 4px; padding: 20px; font-size: 12px;
+}
+.sv-label {
+  font-family: var(--fm); font-size: 9px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 14px;
+}
+.sv-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 4px; margin-bottom: 6px;
+  font-size: 12px;
+}
+.sv-high { background: rgba(200,68,90,.08); border: 1px solid rgba(200,68,90,.2); }
+.sv-med  { background: rgba(184,149,106,.08); border: 1px solid rgba(184,149,106,.2); }
+.sv-ok   { background: rgba(122,158,142,.08); border: 1px solid rgba(122,158,142,.2); }
+.sv-dot  { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.sv-dot-r { background: var(--rose); }
+.sv-dot-g { background: var(--gold); }
+.sv-dot-s { background: var(--sage); }
+.sv-ingr { flex: 1; color: var(--text); font-weight: 500; }
+.sv-sev  { font-family: var(--fm); font-size: 10px; letter-spacing: .05em; }
+.sv-sev-r { color: var(--rose-light); }
+.sv-sev-g { color: var(--gold-light); }
+.sv-sev-s { color: var(--sage); }
+.sv-result {
+  margin-top: 12px; padding: 10px;
+  background: var(--bg3); border-radius: 4px;
+  font-size: 11px; color: var(--text2); line-height: 1.6;
+}
+.sv-result strong { color: var(--text); display: block; margin-bottom: 3px; font-size: 12px; }
+
+/* weather visual */
+.wv-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.wv-loc { font-weight: 500; font-size: 13px; }
+.wv-date { font-family: var(--fm); font-size: 10px; color: var(--text3); }
+.wv-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
+.wv-stat {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 4px; padding: 8px; text-align: center;
+}
+.wv-val { font-family: var(--fd); font-size: 20px; font-weight: 600; line-height: 1; }
+.wv-key { font-family: var(--fm); font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: var(--text3); margin-top: 2px; }
+.wv-adj { padding: 8px 10px; border-bottom: 1px solid var(--border); font-size: 11px; color: var(--text2); display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
+.wv-adj:last-child { border-bottom: none; }
+.wv-pill { flex-shrink: 0; font-family: var(--fm); font-size: 9px; font-weight: 400; padding: 2px 7px; letter-spacing: .06em; text-transform: uppercase; }
+.pill-r { background: rgba(200,68,90,.12); color: var(--rose-light); border: 1px solid rgba(200,68,90,.2); }
+.pill-g { background: rgba(184,149,106,.12); color: var(--gold-light); border: 1px solid rgba(184,149,106,.2); }
+.pill-s { background: rgba(122,158,142,.12); color: var(--sage); border: 1px solid rgba(122,158,142,.2); }
+
+/* cycle visual */
+.cv-grid {
+  display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; margin-bottom: 12px;
+}
+.cv-day {
+  aspect-ratio: 1; border-radius: 3px;
+  background: var(--bg4); border: 1px solid var(--border);
+}
+.cv-day.clear { background: rgba(122,158,142,.2); border-color: rgba(122,158,142,.3); }
+.cv-day.glow  { background: rgba(184,149,106,.2); border-color: rgba(184,149,106,.3); }
+.cv-day.break { background: rgba(200,68,90,.25); border-color: rgba(200,68,90,.35); }
+.cv-day.dry   { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); }
+.cv-insight {
+  background: rgba(122,158,142,.08); border: 1px solid rgba(122,158,142,.2);
+  border-radius: 4px; padding: 10px; font-size: 11px; color: var(--text2); line-height: 1.55;
+}
+.cv-insight strong { color: var(--sage); display: block; margin-bottom: 4px; font-size: 12px; }
+
+/* gw visual */
+.gw-score { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.gw-ring {
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 2px solid rgba(200,68,90,.4);
+  background: rgba(200,68,90,.06);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.gw-ring-num { font-family: var(--fd); font-size: 22px; font-weight: 600; color: var(--rose-light); line-height: 1; }
+.gw-ring-denom { font-family: var(--fm); font-size: 9px; color: var(--text3); }
+.gw-prod { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.gw-verdict { font-family: var(--fm); font-size: 10px; color: var(--rose-light); letter-spacing: .06em; }
+.gw-check { display: flex; gap: 8px; font-size: 11px; color: var(--text2); padding: 7px 0; border-bottom: 1px solid var(--border); line-height: 1.5; align-items: flex-start; }
+.gw-check:last-child { border-bottom: none; }
+.gw-x { color: var(--rose); flex-shrink: 0; font-weight: 600; }
+.gw-ok { color: var(--sage); flex-shrink: 0; }
+
+/* ── WHY NOT OTHERS ── */
+.compare-grid { margin-top: 64px; }
+.compare-header {
+  display: grid;
+  grid-template-columns: 2fr repeat(3,1fr) 1.2fr;
+  gap: 0;
+  border-bottom: 2px solid var(--border2);
+  padding-bottom: 14px; margin-bottom: 0;
+}
+.compare-header-cell {
+  text-align: center;
+  font-family: var(--fm); font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text3); padding: 0 8px;
+}
+.compare-header-cell:first-child { text-align: left; padding-left: 0; }
+.compare-header-cell.highlight { color: var(--rose); }
+.compare-section-title {
+  font-family: var(--fm); font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text3);
+  padding: 20px 0 10px;
+  border-bottom: 1px solid var(--border);
+  grid-column: 1 / -1;
+}
+.compare-row {
+  display: grid;
+  grid-template-columns: 2fr repeat(3,1fr) 1.2fr;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.compare-row:hover { background: var(--bg2); }
+.compare-row:last-child { border-bottom: none; }
+.compare-cell {
+  padding: 12px 8px; text-align: center;
+  font-size: 13px; color: var(--text3);
+  display: flex; align-items: center; justify-content: center;
+}
+.compare-cell:first-child {
+  text-align: left; justify-content: flex-start;
+  font-size: 14px; color: var(--text2); font-weight: 300;
+  padding-left: 0;
+}
+.compare-cell.highlight { background: rgba(200,68,90,.04); }
+.c-yes { color: var(--sage); font-size: 16px; }
+.c-no  { color: rgba(255,255,255,.15); font-size: 16px; }
+.c-part { font-family: var(--fm); font-size: 9px; color: var(--gold); letter-spacing: .04em; }
+.c-broken { font-family: var(--fm); font-size: 9px; color: var(--rose); letter-spacing: .04em; opacity: .7; }
+.c-skiniq { color: var(--rose-light); font-size: 18px; }
+.compare-wrap {
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 0 24px; overflow-x: auto;
+}
+
+/* ── TESTIMONIALS ── */
+.testi-scroll {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 16px; margin-top: 64px;
+}
+.testi-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  padding: 28px; position: relative;
+}
+.testi-card::before {
+  content: '\201C';
+  font-family: var(--fd); font-size: 80px; font-weight: 400;
+  color: var(--rose); opacity: .1;
+  position: absolute; top: 8px; left: 22px;
+  line-height: 1;
+}
+.testi-stars { color: var(--gold); font-size: 11px; margin-bottom: 14px; letter-spacing: 2px; }
+.testi-text { font-size: 14px; color: var(--text2); line-height: 1.8; font-weight: 300; margin-bottom: 20px; font-style: italic; }
+.testi-text strong { color: var(--text); font-style: normal; font-weight: 500; }
+.testi-author { display: flex; align-items: center; gap: 12px; }
+.testi-av {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fd); font-size: 16px; color: var(--rose-light);
+}
+.testi-name { font-size: 13px; font-weight: 500; }
+.testi-sub  { font-family: var(--fm); font-size: 10px; color: var(--text3); letter-spacing: .04em; }
+
+/* ── PRICING ── */
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; margin-top: 64px;
+  border: 1px solid var(--border);
+}
+.plan {
+  padding: 36px 32px;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.plan:last-child { border-right: none; }
+.plan.featured {
+  background: var(--bg2);
+}
+.plan-featured-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right, var(--rose), var(--gold));
+}
+.plan-tag {
+  font-family: var(--fm); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 24px; font-weight: 300;
+}
+.plan-price {
+  font-family: var(--fd); font-size: 52px; font-weight: 400;
+  line-height: 1; margin-bottom: 6px;
+}
+.plan-price sub { font-size: 20px; vertical-align: baseline; font-family: var(--fb); font-weight: 300; }
+.plan-cycle { font-family: var(--fm); font-size: 11px; color: var(--text3); letter-spacing: .06em; margin-bottom: 20px; }
+.plan-desc { font-size: 14px; color: var(--text2); line-height: 1.7; font-weight: 300; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+.plan-feats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.plan-feat { display: flex; gap: 10px; font-size: 13px; color: var(--text2); font-weight: 300; }
+.pf-check { color: var(--sage); flex-shrink: 0; }
+.pf-cross { color: var(--border3); flex-shrink: 0; }
+.plan-btn {
+  width: 100%; padding: 13px;
+  font-family: var(--fb); font-size: 13px;
+  font-weight: 500; letter-spacing: .06em;
+  border-radius: 2px; cursor: pointer;
+  transition: all .2s;
+}
+.plan-btn-primary {
+  background: var(--rose); color: #fff; border: none;
+}
+.plan-btn-primary:hover { background: var(--rose-light); }
+.plan-btn-ghost {
+  background: transparent; color: var(--text2);
+  border: 1px solid var(--border2);
+}
+.plan-btn-ghost:hover { border-color: var(--border3); color: var(--text); }
+
+/* ── FINAL CTA ── */
+.final {
+  padding: 120px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.final-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(200,68,90,.07) 0%, transparent 65%);
+}
+.final h2 {
+  font-family: var(--fd);
+  font-size: clamp(44px, 5.5vw, 72px);
+  font-weight: 400; line-height: 1.08;
+  letter-spacing: -.015em;
+  margin-bottom: 20px;
+  position: relative;
+}
+.final h2 em { font-style: italic; color: var(--rose-light); }
+.final-desc {
+  font-size: 16px; color: var(--text2);
+  max-width: 440px; margin: 0 auto 48px;
+  font-weight: 300; line-height: 1.8;
+  position: relative;
+}
+.final-form {
+  max-width: 440px; margin: 0 auto 16px;
+  display: flex; gap: 0;
+  border: 1px solid var(--border2);
+  border-radius: 2px; overflow: hidden;
+  position: relative;
+}
+.final-form input {
+  flex: 1; background: var(--bg2); border: none;
+  padding: 15px 20px;
+  font-family: var(--fb); font-size: 14px;
+  color: var(--text); outline: none;
+}
+.final-form input::placeholder { color: var(--text3); }
+.final-form button {
+  background: var(--rose); border: none;
+  padding: 15px 28px;
+  font-family: var(--fb); font-size: 13px;
+  font-weight: 500; letter-spacing: .06em;
+  color: #fff; cursor: pointer;
+  transition: background .2s;
+}
+.final-form button:hover { background: var(--rose-light); }
+.final-note { font-family: var(--fm); font-size: 11px; color: var(--text3); letter-spacing: .04em; position: relative; }
+
+/* confirm toast */
+.toast {
+  display: none;
+  position: fixed; bottom: 40px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg3); border: 1px solid rgba(122,158,142,.3);
+  padding: 14px 28px; font-size: 13px; color: var(--text);
+  font-family: var(--fb); z-index: 1000;
+  animation: slidein .3s ease;
+}
+.toast.show { display: block; }
+@keyframes slidein { from{opacity:0;transform:translate(-50%,10px)} to{opacity:1;transform:translate(-50%,0)} }
+
+/* ── FOOTER ── */
+footer {
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+}
+.footer-inner {
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.footer-logo { font-family: var(--fd); font-size: 20px; font-weight: 600; letter-spacing: .04em; }
+.footer-logo em { color: var(--rose); font-style: normal; }
+.footer-note { font-family: var(--fm); font-size: 10px; color: var(--text3); letter-spacing: .06em; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeInUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+.reveal { opacity: 0; }
+.reveal.visible { animation: fadeInUp .7s ease both; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-right { display: none; }
+  .nav-links { gap: 24px; }
+}
+
+@media(max-width:900px) {
+  .step-item { grid-template-columns: 48px 1fr; gap: 24px; }
+  .step-item .step-visual { display: none; }
+  .problem-layout { grid-template-columns: 1fr; }
+  .prob-item:nth-child(2n) { border-right: 1px solid var(--border); }
+  .prob-item:nth-child(5) { border-bottom: 1px solid var(--border); }
+  .prob-item:nth-child(6) { border-bottom: none; }
+  .testi-scroll { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .plan { border-right: none; border-bottom: 1px solid var(--border); }
+  .plan:last-child { border-bottom: none; }
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .container, .hero-inner { padding: 0 24px; }
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
+
+@media(max-width:600px) {
+  nav { padding: 0 16px; height: 56px; }
+  .nav-logo { font-size: 20px; }
+  .nav-cta { padding: 7px 16px; font-size: 12px; }
+  
+  .container, .hero-inner { padding: 0 16px; }
+  .sec { padding: 60px 0; }
+  .problem-layout, .steps-layout, .compare-grid, .testi-scroll, .pricing-grid { margin-top: 40px; }
+  
+  .hero { padding: 100px 0 60px; min-height: auto; }
+  .hero h1 { font-size: clamp(38px, 10vw, 50px); }
+  .sec-title { font-size: clamp(28px, 8vw, 36px); }
+  .step-title { font-size: clamp(22px, 6vw, 24px); margin-bottom: 10px; }
+  
+  .hero-divider { margin: 20px 0; }
+  .hero-desc { font-size: 15px; margin-bottom: 30px; }
+  
+  .waitlist-form { flex-direction: column; max-width: 100%; border: none; background: transparent; gap: 10px; margin-bottom: 16px; }
+  .waitlist-form input { border: 1px solid var(--border2); border-radius: 4px; padding: 14px; background: var(--bg2); width: 100%; box-sizing: border-box; }
+  .waitlist-form button { border-radius: 4px; padding: 14px; width: 100%; box-sizing: border-box; }
+
+  .final-form { flex-direction: column; border: none; background: transparent; gap: 10px; }
+  .final-form input { border: 1px solid var(--border2); border-radius: 4px; padding: 14px; width: 100%; box-sizing: border-box; }
+  .final-form button { border-radius: 4px; padding: 14px; width: 100%; box-sizing: border-box; }
+  
+  .hero-note, .final-note { display: block; line-height: 1.5; text-align: left; }
+  .hero-note::before { display: none; }
+  
+  .prob-item { padding: 24px 16px; }
+  .prob-num { font-size: 48px; margin-bottom: -6px; }
+
+  .step-item { grid-template-columns: 1fr; gap: 12px; padding: 32px 0; }
+  .step-left { text-align: left; padding-top: 0; }
+  .step-index { font-size: 44px; margin-bottom: -8px; }
+  
+  .compare-wrap { padding: 0 16px; margin: 0 -16px; border-left: none; border-right: none; border-radius: 0; }
+  .compare-header { padding-bottom: 10px; }
+  .compare-header-cell { font-size: 9px; padding: 0 4px; }
+  .compare-cell { padding: 10px 4px; font-size: 11px; }
+  .compare-cell:first-child { font-size: 12px; padding-right: 8px; }
+  .c-yes, .c-no { font-size: 14px; }
+  .c-skiniq { font-size: 16px; }
+  .compare-section-title { padding: 16px 0 8px; }
+
+  .plan { padding: 32px 20px; }
+  .plan-price { font-size: 42px; }
+  
+  .testi-card { padding: 20px; }
+  .testi-card::before { font-size: 60px; top: -2px; left: 16px; }
+
+  .final { padding: 80px 0; }
+  .final h2 { font-size: clamp(34px, 9vw, 44px); }
+  
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .footer-note { line-height: 1.5; }
+}
+
+@media(max-width:400px) {
+  .hero h1 { font-size: 34px; }
+  .sec-title { font-size: 26px; }
+  .step-title { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Skin<em>IQ</em></div>
+  <div class="nav-links">
+    <a href="#problem">The Problem</a>
+    <a href="#features">Features</a>
+    <a href="#compare">vs. Others</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="hero-badge-dot"></span>Early Access — Now Open</div>
+      <h1>
+        Your skin<br>
+        <span class="italic">deserves</span> to<br>
+        finally know itself.
+        <span class="small">The world's first skin intelligence app</span>
+      </h1>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">
+        Your products are secretly <strong>fighting each other.</strong> Your "clean" label is <strong>lying to you.</strong> Your routine ignores your cycle, the weather, and everything your skin has been trying to tell you. SkinIQ changes all of that — every single day.
+      </p>
+      <div class="waitlist-form" id="hero-form">
+        <input type="email" id="hero-email" placeholder="your@email.com" autocomplete="email" />
+        <button onclick="joinWaitlist('hero')">Reserve My Spot</button>
+      </div>
+      <div class="hero-note">Free to join · 3 months free when we launch · No credit card</div>
+    </div>
+    <div class="hero-right">
+      <div class="phone-glow"></div>
+      <div class="phone-wrap">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-status">
+              <span>9:41</span>
+              <span>●●●</span>
+            </div>
+            <div class="app-header">
+              <div class="app-logo-sm">Skin<em>IQ</em></div>
+              <span style="font-family:var(--fm);font-size:10px;color:var(--text3)">Good morning ☀</span>
+            </div>
+            <div class="notif-card">
+              <div class="notif-title">Today's Skin Forecast</div>
+              <div class="notif-body">UV 8 · Skip AHA this morning<br>Humidity 87% · Use gel moisturiser</div>
+            </div>
+            <div class="stat-row">
+              <div class="mini-stat">
+                <div class="mini-stat-num" style="color:var(--rose-light)">3</div>
+                <div class="mini-stat-label">Conflicts found</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-stat-num" style="color:var(--sage)">Day 34</div>
+                <div class="mini-stat-label">Skin journal</div>
+              </div>
+            </div>
+            <div style="font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:8px">Active conflicts</div>
+            <div class="conflict-mini">
+              <div class="cm-row"><div class="cm-dot" style="background:var(--rose)"></div>Retinol + AHA — high risk</div>
+              <div class="cm-row"><div class="cm-dot" style="background:var(--gold)"></div>Vit C + BHA — reduce frequency</div>
+              <div class="cm-row"><div class="cm-dot" style="background:var(--sage)"></div>HA + SPF — safe to layer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ══ THE REAL PROBLEM ══ -->
+<section class="sec" id="problem">
+<div class="container">
+  <div class="eyebrow">Why your routine isn't working</div>
+  <div class="sec-title">Six things happening<br>to your skin <em>right now</em></div>
+  <div class="sec-sub">You're not doing anything wrong — you just don't have the information. Nobody does.</div>
+
+  <div class="problem-layout">
+    <div class="prob-item">
+      <div class="prob-num">01</div>
+      <div class="prob-title">Your products are secretly at war</div>
+      <div class="prob-body">Retinol + AHA destroys your skin barrier. Vitamin C + Niacinamide cancel each other. Benzoyl peroxide + retinol makes retinol completely useless. These are <strong>extremely common combinations</strong> that millions of people use daily — because nobody told them not to. Every day you use them together, you're spending money on a reaction instead of results.</div>
+    </div>
+    <div class="prob-item">
+      <div class="prob-num">02</div>
+      <div class="prob-title">That "clean" label is a lie</div>
+      <div class="prob-body">The EU bans 1,600+ cosmetic ingredients. The US bans fewer than 40. Brands freely write "natural," "non-toxic," "fragrance-free" with zero legal definition. Synthetic fragrance is hidden as just <strong>"parfum"</strong> — one word that can legally contain hundreds of chemicals. You're paying a 40–60% premium for "clean" products that aren't clean at all.</div>
+    </div>
+    <div class="prob-item">
+      <div class="prob-num">03</div>
+      <div class="prob-title">You break out on the same days every month</div>
+      <div class="prob-body">You change your cleanser. You change your toner. You buy new products. Nothing works — because the problem was never your products. The luteal phase of your cycle causes a <strong>progesterone spike</strong> that increases oil production in a completely predictable pattern. You've been solving the wrong problem for years.</div>
+    </div>
+    <div class="prob-item">
+      <div class="prob-num">04</div>
+      <div class="prob-title">Your routine ignores the world outside</div>
+      <div class="prob-body">Using AHA on a high-UV morning increases your photosensitivity by 50% — actively causing the sun damage you're trying to prevent. On a humid day, your rich moisturiser is congesting your pores. On a polluted day, your skin needs antioxidants before SPF. Your routine is the same <strong>every single day regardless of what's happening outside.</strong></div>
+    </div>
+    <div class="prob-item">
+      <div class="prob-num">05</div>
+      <div class="prob-title">Your progress photos prove nothing</div>
+      <div class="prob-body">You're 3 months into tretinoin. You put your week-1 and week-12 photos side by side. Different light. Different angle. Different expression. The comparison is completely useless and you genuinely cannot tell if your skin improved — even if it visibly did. <strong>Inconsistent photos are not evidence.</strong></div>
+    </div>
+    <div class="prob-item">
+      <div class="prob-num">06</div>
+      <div class="prob-title">You keep buying what already failed you</div>
+      <div class="prob-body">Average person spends ₹18,000+ a year on skincare. Most of it sits unfinished on a shelf. No memory of what you tried, why you stopped, what pattern keeps repeating. You've bought the same type of Vitamin C serum four times. <strong>You just didn't remember the last three stung you.</strong></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══ THE SOLUTION / HOW IT WORKS ══ -->
+<section class="sec" id="features">
+<div class="container">
+  <div class="eyebrow">How SkinIQ works</div>
+  <div class="sec-title">Five things that work<br><em>together</em> every day</div>
+  <div class="sec-sub">Not five separate features. One connected intelligence that gets smarter the more you use it.</div>
+
+  <div class="steps-layout">
+
+    <div class="step-item">
+      <div class="step-left"><div class="step-index">1</div></div>
+      <div class="step-content">
+        <div class="step-tag">Routine Scanner</div>
+        <div class="step-title">Find every conflict hiding in your shelf</div>
+        <div class="step-body">Scan the barcode of every product you own. SkinIQ pulls the full ingredient list from a database of 2 million+ products, then cross-references all your products against each other. You get a colour-coded conflict report — what's fighting, what's redundant, and your corrected AM and PM routine.</div>
+        <div class="step-points">
+          <div class="step-point">Detects 30+ scientifically confirmed ingredient conflicts</div>
+          <div class="step-point">Red / amber / green severity — so you know what to fix first</div>
+          <div class="step-point">Outputs your corrected routine in the right order</div>
+          <div class="step-point">Flags products that duplicate each other and waste your money</div>
+        </div>
+      </div>
+      <div class="step-visual">
+        <div class="sv-label">Conflict Report — Your routine</div>
+        <div class="sv-row sv-high">
+          <div class="sv-dot sv-dot-r"></div>
+          <div class="sv-ingr">Retinol 0.5% + AHA 30%</div>
+          <div class="sv-sev sv-sev-r">High risk</div>
+        </div>
+        <div class="sv-row sv-high">
+          <div class="sv-dot sv-dot-r"></div>
+          <div class="sv-ingr">Vit C 20% + BHA 2%</div>
+          <div class="sv-sev sv-sev-r">Reduces efficacy</div>
+        </div>
+        <div class="sv-row sv-med">
+          <div class="sv-dot sv-dot-g"></div>
+          <div class="sv-ingr">Niacinamide + Vit C</div>
+          <div class="sv-sev sv-sev-g">Separate AM/PM</div>
+        </div>
+        <div class="sv-row sv-ok">
+          <div class="sv-dot sv-dot-s"></div>
+          <div class="sv-ingr">Hyaluronic Acid + SPF</div>
+          <div class="sv-sev sv-sev-s">Safe to layer</div>
+        </div>
+        <div class="sv-result">
+          <strong>Your corrected AM routine</strong>
+          Cleanser → Vitamin C → Hyaluronic Acid → Moisturiser → SPF 50<br>
+          Retinol & AHA moved to PM only, never same night.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-left"><div class="step-index">2</div></div>
+      <div class="step-content">
+        <div class="step-tag">Daily Skin Forecast</div>
+        <div class="step-title">Every morning — exactly what to change today</div>
+        <div class="step-body">At 7am, SkinIQ reads live UV index, humidity, temperature, and air quality for your location. It then adjusts your saved routine and sends you a push notification with 2–3 specific changes. Not generic skincare tips. Personalised to your actual products, your skin type, and today's actual conditions.</div>
+        <div class="step-points">
+          <div class="step-point">Live weather data for your exact city every morning</div>
+          <div class="step-point">Adjusts your specific saved products — not generic advice</div>
+          <div class="step-point">Takes 10 seconds to read and act on</div>
+          <div class="step-point">UV, humidity, AQI pollution — all factored in</div>
+        </div>
+      </div>
+      <div class="step-visual">
+        <div class="wv-top">
+          <div class="wv-loc">Mumbai, India</div>
+          <div class="wv-date" style="font-family:var(--fm);font-size:10px;color:var(--text3)">Today · 7:00 AM</div>
+        </div>
+        <div class="wv-stats">
+          <div class="wv-stat"><div class="wv-val" style="color:var(--rose-light)">8</div><div class="wv-key">UV Index</div></div>
+          <div class="wv-stat"><div class="wv-val" style="color:var(--sage)">88%</div><div class="wv-key">Humidity</div></div>
+          <div class="wv-stat"><div class="wv-val" style="color:var(--gold-light)">142</div><div class="wv-key">AQI</div></div>
+        </div>
+        <div class="sv-label">Today's adjustments for you</div>
+        <div class="wv-adj"><span class="wv-pill pill-r">Skip</span>AHA serum this morning — UV is 8. Move to tonight only.</div>
+        <div class="wv-adj"><span class="wv-pill pill-g">Swap</span>Heavy moisturiser → gel formula. Humidity 88%.</div>
+        <div class="wv-adj"><span class="wv-pill pill-s">Add</span>Antioxidant before SPF today. AQI is elevated.</div>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-left"><div class="step-index">3</div></div>
+      <div class="step-content">
+        <div class="step-tag">Hormone-Skin Sync</div>
+        <div class="step-title">Finally understand why your skin does what it does every month</div>
+        <div class="step-body">Log your skin condition every day — takes 30 seconds. After 60 days, SkinIQ overlays your logs onto your cycle and shows you your personal pattern. Most users see it immediately: breakouts on specific days, glow days, dry days — all predictable, all connected to phases they didn't know existed.</div>
+        <div class="step-points">
+          <div class="step-point">30-second daily log — tap your skin condition</div>
+          <div class="step-point">Your personal skin-cycle map after 60 days</div>
+          <div class="step-point">Phase-specific routine guidance every week</div>
+          <div class="step-point">The more you log, the smarter it gets — forever</div>
+        </div>
+      </div>
+      <div class="step-visual">
+        <div class="sv-label">Your 28-day skin pattern</div>
+        <div class="cv-grid">
+          <div class="cv-day clear"></div><div class="cv-day clear"></div><div class="cv-day clear"></div>
+          <div class="cv-day glow"></div><div class="cv-day glow"></div><div class="cv-day glow"></div><div class="cv-day glow"></div>
+          <div class="cv-day dry"></div><div class="cv-day dry"></div><div class="cv-day clear"></div>
+          <div class="cv-day clear"></div><div class="cv-day break"></div><div class="cv-day break"></div><div class="cv-day break"></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3)"><div style="width:8px;height:8px;border-radius:2px;background:rgba(122,158,142,.3)"></div>Clear</div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3)"><div style="width:8px;height:8px;border-radius:2px;background:rgba(184,149,106,.3)"></div>Glow</div>
+          <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3)"><div style="width:8px;height:8px;border-radius:2px;background:rgba(200,68,90,.3)"></div>Breakout</div>
+        </div>
+        <div class="cv-insight">
+          <strong>Pattern found — Luteal phase breakouts</strong>
+          Days 21–25 consistently show congestion. This is progesterone-driven oil increase. Start salicylic acid cleanser from day 19. Avoid new products this week.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-left"><div class="step-index">4</div></div>
+      <div class="step-content">
+        <div class="step-tag">Progress Camera</div>
+        <div class="step-title">Before and after photos that actually show the truth</div>
+        <div class="step-body">An AR-guided camera that locks your face position, angle, and lighting every single time. The app tells you exactly where to stand. When the alignment is perfect, it auto-fires. Every photo is identical. After weeks of shots, tap once to generate a beautiful timelapse video of your journey — ready to share in one tap.</div>
+        <div class="step-points">
+          <div class="step-point">AR oval guide — position locked every time</div>
+          <div class="step-point">Lighting direction indicator — consistent exposure</div>
+          <div class="step-point">Auto-captures when alignment is perfect — no guessing</div>
+          <div class="step-point">One-tap timelapse export — 30 seconds, shareable anywhere</div>
+        </div>
+      </div>
+      <div class="step-visual">
+        <div class="sv-label">Progress — Day 1 vs Day 90</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+          <div>
+            <div style="font-family:var(--fm);font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Day 1</div>
+            <div style="aspect-ratio:3/4;background:linear-gradient(160deg,#1a0e1e,#2a1628);border-radius:4px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center">
+              <div style="width:44px;height:60px;border:1px dashed rgba(200,68,90,.3);border-radius:50%"></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:var(--fm);font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Day 90</div>
+            <div style="aspect-ratio:3/4;background:linear-gradient(160deg,#0e1a1e,#162628);border-radius:4px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center">
+              <div style="width:44px;height:60px;border:1.5px solid rgba(122,158,142,.5);border-radius:50%"></div>
+            </div>
+          </div>
+        </div>
+        <div style="background:rgba(122,158,142,.08);border:1px solid rgba(122,158,142,.2);border-radius:4px;padding:8px 10px;font-size:11px;color:var(--text2);text-align:center">
+          ▶ &nbsp; Generate timelapse — 90 days in 30 seconds
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item">
+      <div class="step-left"><div class="step-index">5</div></div>
+      <div class="step-content">
+        <div class="step-tag">Truth Label Scanner</div>
+        <div class="step-title">Know exactly what you're buying before you buy it</div>
+        <div class="step-body">Scan any product in the store. SkinIQ reads every marketing claim on the front — "natural," "clean," "fragrance-free," "non-toxic" — then cross-checks them against the actual ingredient list. Every gap, every contradiction, every EU-banned ingredient legal in India is flagged. You get a Greenwash Score and a plain-English breakdown before you spend a rupee.</div>
+        <div class="step-points">
+          <div class="step-point">Every front-label claim checked against actual ingredients</div>
+          <div class="step-point">EU-banned chemicals flagged — even when legal here</div>
+          <div class="step-point">Greenwash Score 0–100 with full breakdown</div>
+          <div class="step-point">Shareable result card — the expose content that goes viral</div>
+        </div>
+      </div>
+      <div class="step-visual">
+        <div class="gw-score">
+          <div class="gw-ring">
+            <div class="gw-ring-num">74</div>
+            <div class="gw-ring-denom">/100</div>
+          </div>
+          <div>
+            <div class="gw-prod">Pure Glow Face Wash</div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:4px">GlowNatural Co.</div>
+            <div class="gw-verdict">High greenwash score</div>
+          </div>
+        </div>
+        <div class="sv-label">Claims vs reality</div>
+        <div class="gw-check"><span class="gw-x">✗</span><div><strong style="color:var(--text);font-size:12px">Claims "fragrance-free"</strong><br>Ingredients: parfum (synthetic fragrance blend)</div></div>
+        <div class="gw-check"><span class="gw-x">✗</span><div><strong style="color:var(--text);font-size:12px">Claims "100% natural"</strong><br>Contains: PEG-40, Dimethicone, Phenoxyethanol</div></div>
+        <div class="gw-check"><span class="gw-x">✗</span><div><strong style="color:var(--text);font-size:12px">EU restricted ingredient</strong><br>Methylisothiazolinone — banned in EU leave-on products</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ══ WHY NOT THE OTHERS ══ -->
+<section class="sec" id="compare">
+<div class="container">
+  <div class="eyebrow">Why not just use what exists</div>
+  <div class="sec-title">Every other app stops<br>at the <em>surface</em></div>
+  <div class="sec-sub">Yuka tells you if a product is bad. Think Dirty rates toxicity. SkinSort tries to do more — and fails. None of them adapt to your body or your day.</div>
+
+  <div class="compare-wrap">
+    <div class="compare-grid">
+      <div class="compare-header">
+        <div class="compare-header-cell">Feature</div>
+        <div class="compare-header-cell">Yuka</div>
+        <div class="compare-header-cell">Think Dirty</div>
+        <div class="compare-header-cell">SkinSort</div>
+        <div class="compare-header-cell highlight">SkinIQ</div>
+      </div>
+
+      <div style="padding:16px 0 8px;font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Scanning</div>
+      <div class="compare-row">
+        <div class="compare-cell">Barcode ingredient scan</div>
+        <div class="compare-cell"><span class="c-yes">✓</span></div>
+        <div class="compare-cell"><span class="c-yes">✓</span></div>
+        <div class="compare-cell"><span class="c-yes">✓</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Greenwash claim checker</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">EU banned ingredient flag</div>
+        <div class="compare-cell"><span class="c-part">Partial</span></div>
+        <div class="compare-cell"><span class="c-part">Partial</span></div>
+        <div class="compare-cell"><span class="c-part">Partial</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+
+      <div style="padding:16px 0 8px;font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Routine intelligence</div>
+      <div class="compare-row">
+        <div class="compare-cell">Full routine conflict checker</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-broken">Broken</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">AM / PM routine builder</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-part">Partial</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Routine simplifier — remove redundancies</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+
+      <div style="padding:16px 0 8px;font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Body & environment sync</div>
+      <div class="compare-row">
+        <div class="compare-cell">Weather-adaptive daily routine</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Hormone / cycle skin sync</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">UV / AQI pollution warnings</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+
+      <div style="padding:16px 0 8px;font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Tracking & progress</div>
+      <div class="compare-row">
+        <div class="compare-cell">Consistent-angle progress camera</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">Timelapse video export</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell">30-day skin pattern report</div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell"><span class="c-no">✗</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+
+      <div style="padding:16px 0 8px;font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Other</div>
+      <div class="compare-row">
+        <div class="compare-cell">Fair paywall — unlimited free scans</div>
+        <div class="compare-cell"><span class="c-yes">✓</span></div>
+        <div class="compare-cell"><span class="c-yes">✓</span></div>
+        <div class="compare-cell"><span class="c-broken">4 scans cap</span></div>
+        <div class="compare-cell highlight"><span class="c-skiniq">✓</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;font-family:var(--fm);font-size:11px;color:var(--text3);line-height:1.6">
+    SkinSort users report: blank white screen on load, conflict checker that recommends using conflicting products together, and a hard paywall after just 4 free scans. SkinIQ is the app SkinSort promised to be.
+  </div>
+</div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="sec">
+<div class="container">
+  <div class="eyebrow">Early access users</div>
+  <div class="sec-title">What people found out<br>on <em>day one</em></div>
+  <div class="testi-scroll">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"I've been using skincare apps for 3 years. SkinIQ found <strong>4 conflicts in my routine in under 2 minutes</strong> that I'd been causing for 18 months. My skin cleared up in 3 weeks just by fixing the order."</div>
+      <div class="testi-author">
+        <div class="testi-av">P</div>
+        <div><div class="testi-name">Priya S.</div><div class="testi-sub">Mumbai · Skincare enthusiast</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"The daily forecast is unreal. <strong>I had no idea AHAs + high UV = sun damage.</strong> I've literally been causing the hyperpigmentation I was trying to fix — with the serum meant to fix it."</div>
+      <div class="testi-author">
+        <div class="testi-av">A</div>
+        <div><div class="testi-name">Arjun M.</div><div class="testi-sub">Bangalore · Tretinoin user</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"I went to 3 dermatologists about my monthly breakouts. <strong>The cycle sync showed me the pattern in 60 days</strong> that 3 doctors missed in 3 years. The luteal phase was the entire problem."</div>
+      <div class="testi-author">
+        <div class="testi-av">N</div>
+        <div><div class="testi-name">Neha R.</div><div class="testi-sub">Delhi · PCOS · 31</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section class="sec" id="pricing">
+<div class="container">
+  <div class="eyebrow">Simple, fair pricing</div>
+  <div class="sec-title">Unlimited scanning is<br><em>always</em> free</div>
+  <div class="sec-sub">Scan as much as you want, forever. Pay only when you want the intelligence layer — the daily forecast, the conflict checker, and everything that makes SkinIQ different.</div>
+  <div class="pricing-grid">
+
+    <div class="plan">
+      <div class="plan-tag">Free — Forever</div>
+      <div class="plan-price"><sub>₹</sub>0</div>
+      <div class="plan-cycle">No credit card · No limit</div>
+      <div class="plan-desc">Everything you need to understand your products. No tricks, no hidden limits, no 4-scan paywalls.</div>
+      <div class="plan-feats">
+        <div class="plan-feat"><span class="pf-check">✓</span>Unlimited barcode scans</div>
+        <div class="plan-feat"><span class="pf-check">✓</span>Ingredient safety score</div>
+        <div class="plan-feat"><span class="pf-check">✓</span>Truth Label — Greenwash Scanner</div>
+        <div class="plan-feat"><span class="pf-check">✓</span>EU banned ingredient flags</div>
+        <div class="plan-feat"><span class="pf-check">✓</span>7-day skin log</div>
+        <div class="plan-feat"><span class="pf-cross">✗</span><span style="color:var(--text3)">Daily Skin Forecast</span></div>
+        <div class="plan-feat"><span class="pf-cross">✗</span><span style="color:var(--text3)">Routine Conflict Report</span></div>
+        <div class="plan-feat"><span class="pf-cross">✗</span><span style="color:var(--text3)">Progress Camera</span></div>
+      </div>
+      <button class="plan-btn plan-btn-ghost" onclick="joinWaitlist('free')">Join Waitlist — Free</button>
+    </div>
+
+    <div class="plan featured">
+      <div class="plan-featured-bar"></div>
+      <div class="plan-tag">Glow — Most Popular</div>
+      <div class="plan-price"><sub>₹</sub>580</div>
+      <div class="plan-cycle">per month · ~$7 · Cancel anytime</div>
+      <div class="plan-desc">The complete daily skin intelligence layer. Everything connected. Your routine finally adapts to your real life.</div>
+      <div class="plan-feats">
+        <div class="plan-feat"><span class="pf-check">✓</span>Everything in Free</div>
+        <div class="plan-feat"><span class="pf-check">✓</span><strong style="color:var(--text)">Daily Skin Forecast</strong> — 7am push</div>
+        <div class="plan-feat"><span class="pf-check">✓</span><strong style="color:var(--text)">Full Routine Conflict Checker</strong></div>
+        <div class="plan-feat"><span class="pf-check">✓</span>AM / PM routine builder</div>
+        <div class="plan-feat"><span class="pf-check">✓</span>Science-based dupe finder</div>
+        <div class="plan-feat"><span class="pf-check">✓</span><strong style="color:var(--text)">Progress Camera + Timelapse</strong></div>
+        <div class="plan-feat"><span class="pf-check">✓</span>Shareable Story cards</div>
+        <div class="plan-feat"><span class="pf-cross">✗</span><span style="color:var(--text3)">Hormone-Cycle Sync</span></div>
+      </div>
+      <button class="plan-btn plan-btn-primary" onclick="joinWaitlist('glow')">Get 3 Months Free — Early Access</button>
+    </div>
+
+    <div class="plan">
+      <div class="plan-tag">Intelligence</div>
+      <div class="plan-price"><sub>₹</sub>990</div>
+      <div class="plan-cycle">per month · ~$12 · Cancel anytime</div>
+      <div class="plan-desc">The full picture. The cycle sync that builds a skin forecast unique to your body — something no competitor can ever replicate.</div>
+      <div class="plan-feats">
+        <div class="plan-feat"><span class="pf-check">✓</span>Everything in Glow</div>
+        <div class="plan-feat"><span class="pf-check">✓</span><strong style="color:var(--text)">Hormone-Cycle Skin Sync</strong></div>
+        <div class="plan-feat"><span class="pf-check">✓</span>Your personal 28-day skin forecast</div>
+        <div class="plan-feat"><span class="pf-check">✓</span>Phase-specific routine every week</div>
+        <div class="plan-feat"><span class="pf-check">✓</span>30-day pattern intelligence report</div>
+        <div class="plan-feat"><span class="pf-check">✓</span>Full skin history export</div>
+        <div class="plan-feat"><span class="pf-check">✓</span>Priority feature access</div>
+      </div>
+      <button class="plan-btn plan-btn-ghost" onclick="joinWaitlist('intel')">Get Intelligence Plan</button>
+    </div>
+
+  </div>
+  <div style="margin-top:18px;text-align:center;font-family:var(--fm);font-size:11px;color:var(--text3);letter-spacing:.04em">
+    Early access members get 3 months free on any paid plan · No credit card to join the waitlist
+  </div>
+</div>
+</section>
+
+<!-- ══ FINAL CTA ══ -->
+<section class="sec final" id="waitlist" style="border-bottom:none">
+  <div class="final-bg"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="eyebrow" style="justify-content:center">Reserve your spot</div>
+    <h2>Stop guessing.<br>Start <em>knowing.</em></h2>
+    <p class="final-desc">Join the waitlist today. Early access users get 3 months completely free. Be the first to know when SkinIQ launches.</p>
+    <div class="final-form" id="final-form">
+      <input type="email" id="final-email" placeholder="your@email.com" autocomplete="email" />
+      <button onclick="joinWaitlist('final')">Claim My Spot</button>
+    </div>
+    <div class="final-note">Free to join · 3 months free on launch · No spam · Unsubscribe anytime</div>
+  </div>
+</section>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  You're on the list — 3 months free saved for you. We'll be in touch.
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+  <div class="footer-inner">
+    <div class="footer-logo">Skin<em>IQ</em></div>
+    <div class="footer-note">© 2026 SkinIQ · skiniq.app · Privacy Policy · Terms</div>
+  </div>
+</div>
+</footer>
+
+<script>
+// Cursor
+const cur = document.getElementById('cur');
+const curR = document.getElementById('curR');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  rx += (mx - rx) * 0.18;
+  ry += (my - ry) * 0.18;
+  if(cur) { cur.style.left = mx + 'px'; cur.style.top = my + 'px'; }
+  if(curR) { curR.style.left = rx + 'px'; curR.style.top = ry + 'px'; }
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+
+// Waitlist
+let count = 1247;
+async function joinWaitlist(src) {
+  const emailId = src === 'final' ? 'final-email' : (src === 'hero' ? 'hero-email' : null);
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzHh8x05BzfcSnMLIL4nC4kfTaQrXNBi62DCPFwtf06HE9bjXonSEDpz_w2sqI5cQvO/exec';
+
+  if (emailId) {
+    const el = document.getElementById(emailId);
+    if (el && el.value && el.value.includes('@')) {
+      const email = el.value;
+      
+      // loading state
+      const btn = el.nextElementSibling;
+      const originalText = btn.innerText;
+      btn.innerText = 'Joining...';
+      btn.style.pointerEvents = 'none';
+
+      try {
+        const formData = new FormData();
+        formData.append('email', email);
+        
+        await fetch(scriptURL, { 
+          method: 'POST', 
+          body: formData,
+          mode: 'no-cors'
+        });
+        
+        count++;
+        el.value = '';
+        showToast();
+      } catch (error) {
+        console.error('Error!', error.message);
+      } finally {
+        btn.innerText = originalText;
+        btn.style.pointerEvents = 'auto';
+      }
+    } else if (el) {
+      el.style.outline = '1px solid var(--rose)';
+      setTimeout(() => el.style.outline = '', 1500);
+    }
+  } else {
+    // from pricing buttons — scroll to waitlist
+    document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(showToast, 800);
+  }
+}
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// Enter key on inputs
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    if (document.activeElement.id === 'hero-email') joinWaitlist('hero');
+    if (document.activeElement.id === 'final-email') joinWaitlist('final');
+  }
+});
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.prob-item, .step-item, .testi-card, .plan');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.animation = `fadeInUp .6s ease ${(i % 3) * .1}s both`;
+      e.target.style.opacity = '1';
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => { el.style.opacity = '0'; obs.observe(el); });
+</script>
+</body>
+</html>
