@@ -1729,6 +1729,10 @@
     }
 
     @media(max-width:600px) {
+      body {
+        font-size: 18px; /* Increased base font size for mobile */
+      }
+
       nav {
         padding: 0 16px;
         height: 56px;
@@ -1783,7 +1787,7 @@
       }
 
       .hero-desc {
-        font-size: 15px;
+        font-size: 17px;
         margin-bottom: 30px;
       }
 
@@ -1799,17 +1803,19 @@
       .waitlist-form input {
         border: 1px solid var(--border2);
         border-radius: 4px;
-        padding: 14px;
+        padding: 16px;
         background: var(--bg2);
         width: 100%;
         box-sizing: border-box;
+        font-size: 16px;
       }
 
       .waitlist-form button {
         border-radius: 4px;
-        padding: 14px;
+        padding: 16px;
         width: 100%;
         box-sizing: border-box;
+        font-size: 15px;
       }
 
       .final-form {
@@ -1822,16 +1828,18 @@
       .final-form input {
         border: 1px solid var(--border2);
         border-radius: 4px;
-        padding: 14px;
+        padding: 16px;
         width: 100%;
         box-sizing: border-box;
+        font-size: 16px;
       }
 
       .final-form button {
         border-radius: 4px;
-        padding: 14px;
+        padding: 16px;
         width: 100%;
         box-sizing: border-box;
+        font-size: 15px;
       }
 
       .hero-note,
@@ -1847,6 +1855,10 @@
 
       .prob-item {
         padding: 24px 16px;
+      }
+
+      .prob-body {
+        font-size: 16px;
       }
 
       .prob-num {
@@ -1868,6 +1880,14 @@
       .step-index {
         font-size: 44px;
         margin-bottom: -8px;
+      }
+      
+      .step-body {
+        font-size: 16px;
+      }
+      
+      .step-point {
+        font-size: 15px;
       }
 
       .compare-wrap {
@@ -2066,55 +2086,73 @@
       <div class="sec-sub">You're not doing anything wrong — you just don't have the information. Nobody does.</div>
 
       <div class="problem-layout">
-        <div class="prob-item">
-          <div class="prob-num">01</div>
-          <div class="prob-title">Your products are secretly at war</div>
-          <div class="prob-body">Retinol + AHA destroys your skin barrier. Vitamin C + Niacinamide cancel each other.
-            Benzoyl peroxide + retinol makes retinol completely useless. These are <strong>extremely common
-              combinations</strong> that millions of people use daily — because nobody told them not to. Every day you
-            use them together, you're spending money on a reaction instead of results.</div>
-        </div>
-        <div class="prob-item">
-          <div class="prob-num">02</div>
-          <div class="prob-title">That "clean" label is a lie</div>
-          <div class="prob-body">The EU bans 1,600+ cosmetic ingredients. The US bans fewer than 40. Brands freely write
-            "natural," "non-toxic," "fragrance-free" with zero legal definition. Synthetic fragrance is hidden as just
-            <strong>"parfum"</strong> — one word that can legally contain hundreds of chemicals. You're paying a 40–60%
-            premium for "clean" products that aren't clean at all.</div>
-        </div>
-        <div class="prob-item">
-          <div class="prob-num">03</div>
-          <div class="prob-title">You break out on the same days every month</div>
-          <div class="prob-body">You change your cleanser. You change your toner. You buy new products. Nothing works —
-            because the problem was never your products. The luteal phase of your cycle causes a <strong>progesterone
-              spike</strong> that increases oil production in a completely predictable pattern. You've been solving the
-            wrong problem for years.</div>
-        </div>
-        <div class="prob-item">
-          <div class="prob-num">04</div>
-          <div class="prob-title">Your routine ignores the world outside</div>
-          <div class="prob-body">Using AHA on a high-UV morning increases your photosensitivity by 50% — actively
-            causing the sun damage you're trying to prevent. On a humid day, your rich moisturiser is congesting your
-            pores. On a polluted day, your skin needs antioxidants before SPF. Your routine is the same <strong>every
-              single day regardless of what's happening outside.</strong></div>
-        </div>
-        <div class="prob-item">
-          <div class="prob-num">05</div>
-          <div class="prob-title">Your progress photos prove nothing</div>
-          <div class="prob-body">You're 3 months into tretinoin. You put your week-1 and week-12 photos side by side.
-            Different light. Different angle. Different expression. The comparison is completely useless and you
-            genuinely cannot tell if your skin improved — even if it visibly did. <strong>Inconsistent photos are not
-              evidence.</strong></div>
-        </div>
-        <div class="prob-item">
-          <div class="prob-num">06</div>
-          <div class="prob-title">You keep buying what already failed you</div>
-          <div class="prob-body">Average person spends ₹18,000+ a year on skincare. Most of it sits unfinished on a
-            shelf. No memory of what you tried, why you stopped, what pattern keeps repeating. You've bought the same
-            type of Vitamin C serum four times. <strong>You just didn't remember the last three stung you.</strong>
-          </div>
+      <div class="prob-item">
+        <div class="prob-num">01</div>
+        <div class="prob-title">Products secretly fighting</div>
+        <div class="prob-body">
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+            <li><span style="color:var(--rose)">•</span> Retinol + AHA destroys your skin barrier.</li>
+            <li><span style="color:var(--rose)">•</span> Vitamin C + Niacinamide cancel each other.</li>
+            <li><span style="color:var(--rose)">•</span> <strong>Stop paying for a reaction instead of results.</strong></li>
+          </ul>
         </div>
       </div>
+      <div class="prob-item">
+        <div class="prob-num">02</div>
+        <div class="prob-title">The "clean" label is a lie</div>
+        <div class="prob-body">
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+            <li><span style="color:var(--rose)">•</span> The EU bans 1,600+ ingredients. The US bans fewer than 40.</li>
+            <li><span style="color:var(--rose)">•</span> "Parfum" legally hides hundreds of chemicals.</li>
+            <li><span style="color:var(--rose)">•</span> <strong>You pay a premium for lies.</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="prob-item">
+        <div class="prob-num">03</div>
+        <div class="prob-title">Predictable monthly breakouts</div>
+        <div class="prob-body">
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+            <li><span style="color:var(--rose)">•</span> Products aren't failing you; your hormones are shifting.</li>
+            <li><span style="color:var(--rose)">•</span> Luteal phase spikes progesterone, boosting oil.</li>
+            <li><span style="color:var(--rose)">•</span> <strong>Stop solving the wrong problem.</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="prob-item">
+        <div class="prob-num">04</div>
+        <div class="prob-title">Ignoring the outside world</div>
+        <div class="prob-body">
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+            <li><span style="color:var(--rose)">•</span> AHA on a high-UV day causes sun damage.</li>
+            <li><span style="color:var(--rose)">•</span> Heavy creams on humid days block pores.</li>
+            <li><span style="color:var(--rose)">•</span> <strong>Your daily routine shouldn't be daily guesswork.</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="prob-item">
+        <div class="prob-num">05</div>
+        <div class="prob-title">Useless progress photos</div>
+        <div class="prob-body">
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+            <li><span style="color:var(--rose)">•</span> Different light. Different angles.</li>
+            <li><span style="color:var(--rose)">•</span> Can't tell if week-12 tretinoin is working.</li>
+            <li><span style="color:var(--rose)">•</span> <strong>Inconsistent photos are not evidence.</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="prob-item">
+        <div class="prob-num">06</div>
+        <div class="prob-title">Buying identical failures</div>
+        <div class="prob-body">
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+            <li><span style="color:var(--rose)">•</span> Spending ₹18k+ yearly on abandoned products.</li>
+            <li><span style="color:var(--rose)">•</span> Forgetting *why* a serum failed last year.</li>
+            <li><span style="color:var(--rose)">•</span> <strong>You just buy the same mistake again.</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
     </div>
   </section>
 
@@ -2135,10 +2173,7 @@
           <div class="step-content">
             <div class="step-tag">Routine Scanner</div>
             <div class="step-title">Find every conflict hiding in your shelf</div>
-            <div class="step-body">Scan the barcode of every product you own. SkinIQ pulls the full ingredient list from
-              a database of 2 million+ products, then cross-references all your products against each other. You get a
-              colour-coded conflict report — what's fighting, what's redundant, and your corrected AM and PM routine.
-            </div>
+            <div class="step-body">Scan your products. We cross-reference 2M+ ingredients to build a colour-coded conflict report showing exactly what's fighting and what's redundant.</div>
             <div class="step-points">
               <div class="step-point">Detects 30+ scientifically confirmed ingredient conflicts</div>
               <div class="step-point">Red / amber / green severity — so you know what to fix first</div>
@@ -2183,10 +2218,7 @@
           <div class="step-content">
             <div class="step-tag">Daily Skin Forecast</div>
             <div class="step-title">Every morning — exactly what to change today</div>
-            <div class="step-body">At 7am, SkinIQ reads live UV index, humidity, temperature, and air quality for your
-              location. It then adjusts your saved routine and sends you a push notification with 2–3 specific changes.
-              Not generic skincare tips. Personalised to your actual products, your skin type, and today's actual
-              conditions.</div>
+            <div class="step-body">At 7am, SkinIQ checks live UV, humidity, and pollution, then triggers a push notification adjusting your exact saved routine. <strong>No generic tips, just actionable tweaks.</strong></div>
             <div class="step-points">
               <div class="step-point">Live weather data for your exact city every morning</div>
               <div class="step-point">Adjusts your specific saved products — not generic advice</div>
@@ -2230,10 +2262,7 @@
           <div class="step-content">
             <div class="step-tag">Hormone-Skin Sync</div>
             <div class="step-title">Finally understand why your skin does what it does every month</div>
-            <div class="step-body">Log your skin condition every day — takes 30 seconds. After 60 days, SkinIQ overlays
-              your logs onto your cycle and shows you your personal pattern. Most users see it immediately: breakouts on
-              specific days, glow days, dry days — all predictable, all connected to phases they didn't know existed.
-            </div>
+            <div class="step-body">Log your skin condition in 30 seconds daily. After 60 days, we map your unique monthly pattern. See exactly when breakouts and "glow days" hit based on your cycle.</div>
             <div class="step-points">
               <div class="step-point">30-second daily log — tap your skin condition</div>
               <div class="step-point">Your personal skin-cycle map after 60 days</div>
@@ -2285,10 +2314,7 @@
           <div class="step-content">
             <div class="step-tag">Progress Camera</div>
             <div class="step-title">Before and after photos that actually show the truth</div>
-            <div class="step-body">An AR-guided camera that locks your face position, angle, and lighting every single
-              time. The app tells you exactly where to stand. When the alignment is perfect, it auto-fires. Every photo
-              is identical. After weeks of shots, tap once to generate a beautiful timelapse video of your journey —
-              ready to share in one tap.</div>
+            <div class="step-body">AR guides lock your face angle and lighting every time. Generating identical progress photos that prove what works. Export a 90-day timelapse with one tap.</div>
             <div class="step-points">
               <div class="step-point">AR oval guide — position locked every time</div>
               <div class="step-point">Lighting direction indicator — consistent exposure</div>
@@ -2332,10 +2358,7 @@
           <div class="step-content">
             <div class="step-tag">Truth Label Scanner</div>
             <div class="step-title">Know exactly what you're buying before you buy it</div>
-            <div class="step-body">Scan any product in the store. SkinIQ reads every marketing claim on the front —
-              "natural," "clean," "fragrance-free," "non-toxic" — then cross-checks them against the actual ingredient
-              list. Every gap, every contradiction, every EU-banned ingredient legal in India is flagged. You get a
-              Greenwash Score and a plain-English breakdown before you spend a rupee.</div>
+            <div class="step-body">Scan any store product. We check front-label marketing against the fine-print ingredients to generate a transparent 0-100 Greenwash Score.</div>
             <div class="step-points">
               <div class="step-point">Every front-label claim checked against actual ingredients</div>
               <div class="step-point">EU-banned chemicals flagged — even when legal here</div>
